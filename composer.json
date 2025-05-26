@@ -4,7 +4,16 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Gildsmith\\Product\\": "src/"
+            "Gildsmith\\Product\\": "src/",
+            "Gildsmith\\Product\\Database\\Factories\\": "database/factories/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/",
+            "Workbench\\App\\": "workbench/app/",
+            "Workbench\\Database\\Factories\\": "workbench/database/factories/",
+            "Workbench\\Database\\Seeders\\": "workbench/database/seeders/"
         }
     },
     "authors": [
@@ -15,9 +24,43 @@
     ],
     "require-dev": {
         "illuminate/support": "^12",
-        "laravel/pint": "^1"
+        "laravel/pint": "^1",
+        "pestphp/pest": "^3",
+        "pestphp/pest-plugin-watch": "^3",
+        "pestphp/pest-plugin-type-coverage": "^3",
+        "pestphp/pest-plugin-stressless": "^3",
+        "orchestra/testbench": "^10.3"
     },
     "require": {
-        "gildsmith/contract": "dev-master"
+        "gildsmith/contract": "dev-master",
+        "spatie/laravel-translatable": "^6.11",
+        "gildsmith/support": "dev-master"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "@clear",
+            "@prepare"
+        ],
+        "clear": "@php vendor/bin/testbench package:purge-skeleton --ansi",
+        "prepare": "@php vendor/bin/testbench package:discover --ansi",
+        "build": "@php vendor/bin/testbench workbench:build --ansi",
+        "serve": [
+            "Composer\\Config::disableProcessTimeout",
+            "@build",
+            "@php vendor/bin/testbench serve --ansi"
+        ],
+        "lint": [
+            "@php vendor/bin/pint --ansi",
+            "@php vendor/bin/phpstan analyse --verbose --ansi"
+        ],
+        "test": [
+            "@clear",
+            "@php vendor/bin/pest"
+        ]
     }
 }
