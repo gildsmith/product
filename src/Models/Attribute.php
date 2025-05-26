@@ -8,7 +8,6 @@ use Gildsmith\Contract\Product\Attribute as AttributeInterface;
 use Gildsmith\Contract\Product\AttributeValue as AttributeValueInterface;
 use Gildsmith\Product\Database\Factories\AttributeFactory;
 use Gildsmith\Support\Utils\ValidationRules;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
