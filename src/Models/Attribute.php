@@ -14,9 +14,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Translatable\HasTranslations;
 
-/**
- * @method static AttributeFactory factory($count = null, $state = [])
- */
 class Attribute extends Model implements AttributeInterface
 {
     use HasAbstractRelationships;
