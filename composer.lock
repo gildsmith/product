@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e5f6ea56e92def008ca0934c7b233a0c",
+    "content-hash": "0a090929d228af9cbd9e308c2b62f135",
     "packages": [
         {
             "name": "brick/math",
@@ -587,12 +587,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/gildsmith/contract.git",
-                "reference": "ba288b9c1c86944e8ec0fe0baf92eafa8a35b07d"
+                "reference": "90eac88e57ac0c2d3a35c8de540e421b9ed3c1ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gildsmith/contract/zipball/ba288b9c1c86944e8ec0fe0baf92eafa8a35b07d",
-                "reference": "ba288b9c1c86944e8ec0fe0baf92eafa8a35b07d",
+                "url": "https://api.github.com/repos/gildsmith/contract/zipball/90eac88e57ac0c2d3a35c8de540e421b9ed3c1ba",
+                "reference": "90eac88e57ac0c2d3a35c8de540e421b9ed3c1ba",
                 "shasum": ""
             },
             "require-dev": {
@@ -620,7 +620,7 @@
                 "issues": "https://github.com/gildsmith/contract/issues",
                 "source": "https://github.com/gildsmith/contract/tree/master"
             },
-            "time": "2025-05-26T07:34:22+00:00"
+            "time": "2025-05-27T18:28:33+00:00"
         },
         {
             "name": "gildsmith/support",
@@ -628,23 +628,32 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/gildsmith/support.git",
-                "reference": "4cca36b72b17da5256609062d798bf9ddea8248d"
+                "reference": "4372b06b6380f0f78397e606e0ae6871b1bd9ea8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gildsmith/support/zipball/4cca36b72b17da5256609062d798bf9ddea8248d",
-                "reference": "4cca36b72b17da5256609062d798bf9ddea8248d",
+                "url": "https://api.github.com/repos/gildsmith/support/zipball/4372b06b6380f0f78397e606e0ae6871b1bd9ea8",
+                "reference": "4372b06b6380f0f78397e606e0ae6871b1bd9ea8",
                 "shasum": ""
             },
             "require": {
-                "gildsmith/contract": "dev-master"
+                "gildsmith/contract": "dev-master",
+                "illuminate/database": "^12",
+                "illuminate/support": "^12"
             },
             "require-dev": {
-                "illuminate/support": "^12",
-                "laravel/pint": "^1"
+                "laravel/pint": "^1",
+                "orchestra/testbench": "^10"
             },
             "default-branch": true,
             "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Gildsmith\\Support\\Providers\\AppServiceProvider"
+                    ]
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Gildsmith\\Support\\": "src/"
@@ -664,7 +673,7 @@
                 "issues": "https://github.com/gildsmith/support/issues",
                 "source": "https://github.com/gildsmith/support/tree/master"
             },
-            "time": "2025-05-26T06:52:41+00:00"
+            "time": "2025-05-28T20:11:10+00:00"
         },
         {
             "name": "graham-campbell/result-type",
@@ -1141,16 +1150,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v12.15.0",
+            "version": "v12.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "2ef7fb183f18e547af4eb9f5a55b2ac1011f0b77"
+                "reference": "293bb1c70224faebfd3d4328e201c37115da055f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/2ef7fb183f18e547af4eb9f5a55b2ac1011f0b77",
-                "reference": "2ef7fb183f18e547af4eb9f5a55b2ac1011f0b77",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/293bb1c70224faebfd3d4328e201c37115da055f",
+                "reference": "293bb1c70224faebfd3d4328e201c37115da055f",
                 "shasum": ""
             },
             "require": {
@@ -1352,7 +1361,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2025-05-20T15:10:44+00:00"
+            "time": "2025-05-27T15:49:44+00:00"
         },
         {
             "name": "laravel/prompts",

@@ -1,4 +1,11 @@
 <?php return array (
+  'gildsmith/support' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Gildsmith\\Support\\Providers\\AppServiceProvider',
+    ),
+  ),
   'laravel/pail' => 
   array (
     'providers' => 
@@ -53,6 +60,13 @@
     'providers' => 
     array (
       0 => 'Spatie\\Translatable\\TranslatableServiceProvider',
+    ),
+  ),
+  'gildsmith/product' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Gildsmith\\Product\\Providers\\AppServiceProvider',
     ),
   ),
 );

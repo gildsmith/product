@@ -16,7 +16,6 @@ class AttributeFactory extends Factory
     {
         return [
             'code' => $this->faker->unique()->regexify('[a-z0-9_]{8}'),
-
             'name' => [
                 'en' => ucfirst($this->faker->word),
                 'pl' => ucfirst($this->faker->word),
@@ -26,9 +25,6 @@ class AttributeFactory extends Factory
 
     public function hasValues(int $count = 1): static
     {
-        return $this->has(
-            AttributeValue::factory()->count($count),
-            'values'
-        );
+        return $this->has(AttributeValue::factory()->count($count), 'values');
     }
 }

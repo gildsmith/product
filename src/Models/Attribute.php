@@ -4,17 +4,22 @@ declare(strict_types=1);
 
 namespace Gildsmith\Product\Models;
 
-use Gildsmith\Contract\Product\Attribute as AttributeInterface;
-use Gildsmith\Contract\Product\AttributeValue as AttributeValueInterface;
+use Gildsmith\Contract\Product\AttributeInterface;
+use Gildsmith\Contract\Product\AttributeValueInterface;
 use Gildsmith\Product\Database\Factories\AttributeFactory;
+use Gildsmith\Support\Model\Concerns\HasAbstractRelationships;
 use Gildsmith\Support\Utils\ValidationRules;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Translatable\HasTranslations;
 
+/**
+ * @method static AttributeFactory factory($count = null, $state = [])
+ */
 class Attribute extends Model implements AttributeInterface
 {
+    use HasAbstractRelationships;
     use HasFactory;
     use HasTranslations;
 

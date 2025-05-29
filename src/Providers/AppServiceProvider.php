@@ -4,20 +4,32 @@ declare(strict_types=1);
 
 namespace Gildsmith\Product\Providers;
 
-use Gildsmith\Product\Product;
+use Gildsmith\Contract\Product\AttributeInterface;
+use Gildsmith\Contract\Product\AttributeValueInterface;
+use Gildsmith\Product\Models\Attribute;
+use Gildsmith\Product\Models\AttributeValue;
 use Illuminate\Support\ServiceProvider;
 
 final class AppServiceProvider extends ServiceProvider
 {
+    /**
+     * List of actions provided by this package
+     * that can be executed as Artisan commands.
+     */
+    protected array $commands = [
+        //
+    ];
+
     public function register(): void
     {
-        $this->app->bind('gildsmith', fn () => new Product);
-
+        $this->app->bind(AttributeValueInterface::class, AttributeValue::class);
+        $this->app->bind(AttributeInterface::class, Attribute::class);
     }
 
     public function boot(): void
     {
         $this->bootResources();
+        $this->bootCommands();
     }
 
     /**
@@ -27,8 +39,6 @@ final class AppServiceProvider extends ServiceProvider
     public function bootResources(): void
     {
         $this->loadMigrationsFrom($this->packagePath('database/migrations'));
-        // $this->loadViewsFrom($this->packagePath('resources/views'), 'gildsmith');
-        // $this->publishes([$this->packagePath('resources/views') => resource_path('views/vendor/gildsmith')], 'views');
     }
 
     /**
@@ -36,6 +46,17 @@ final class AppServiceProvider extends ServiceProvider
      */
     private function packagePath(string $path): string
     {
-        return dirname(__DIR__, 2).'/'.$path;
+        return dirname(__DIR__, 2) . '/' . $path;
+    }
+
+    /**
+     * Registers commands defined in the $commands
+     * array when running in the console.
+     */
+    public function bootCommands(): void
+    {
+        if ($this->app->runningInConsole()) {
+            $this->commands($this->commands);
+        }
     }
 }

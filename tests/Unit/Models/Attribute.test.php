@@ -2,14 +2,16 @@
 
 declare(strict_types=1);
 
+use Gildsmith\Contract\Product\AttributeValueInterface;
 use Gildsmith\Product\Models\Attribute;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 covers(Attribute::class);
 
-it('can be created via factory', function () {
-    $attribute = Attribute::factory()->create();
+it('has a values relationship', function () {
+    $relationship = new Attribute()?->values();
+    $relatedModel = $relationship?->getRelated();
 
-    expect($attribute)->toBeInstanceOf(Attribute::class)
-        ->and($attribute->code)->toBeString()
-        ->and($attribute->getTranslations('name'))->toHaveKeys(['en', 'pl']);
+    expect($relationship)->toBeInstanceOf(HasMany::class);
+    expect($relatedModel)->toBeInstanceOf(AttributeValueInterface::class);
 });

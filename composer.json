@@ -29,7 +29,7 @@
         "pestphp/pest-plugin-watch": "^3",
         "pestphp/pest-plugin-type-coverage": "^3",
         "pestphp/pest-plugin-stressless": "^3",
-        "orchestra/testbench": "^10.3"
+        "orchestra/testbench": "^10"
     },
     "require": {
         "gildsmith/contract": "dev-master",
@@ -62,5 +62,12 @@
             "@clear",
             "@php vendor/bin/pest"
         ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Gildsmith\\Product\\Providers\\AppServiceProvider"
+            ]
+        }
     }
 }
