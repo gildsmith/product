@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Gildsmith\Product\Database\Factories;
 
 use Gildsmith\Product\Models\Attribute;
-use Gildsmith\Product\Models\AttributeValue;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AttributeFactory extends Factory
@@ -21,10 +20,5 @@ class AttributeFactory extends Factory
                 'pl' => ucfirst($this->faker->word),
             ],
         ];
-    }
-
-    public function hasValues(int $count = 1): static
-    {
-        return $this->has(AttributeValue::factory()->count($count), 'values');
     }
 }
