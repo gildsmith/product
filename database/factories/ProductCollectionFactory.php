@@ -15,7 +15,7 @@ class ProductCollectionFactory extends Factory
     {
         return [
             'code' => $this->faker->unique()->regexify('[a-z0-9_]{8}'),
-            'type' => $this->faker->word(),
+            'type' => strtolower($this->faker->word()),
             'name' => [
                 'en' => ucfirst($this->faker->word),
                 'pl' => ucfirst($this->faker->word),

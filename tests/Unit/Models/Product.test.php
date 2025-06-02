@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Gildsmith\Contract\Product\AttributeValueInterface;
 use Gildsmith\Contract\Product\BlueprintInterface;
+use Gildsmith\Contract\Product\ProductCollectionInterface;
 use Gildsmith\Product\Models\Product;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -33,13 +34,13 @@ it('has blueprint relationship', function () {
 });
 
 it('has collections relationship', function () {
-    $model = Product::factory()->hasProductCollections(3)->create();
+    $model = Product::factory()->hasCollections(3)->create();
 
-    $relationship = $model->productCollections();
+    $relationship = $model->collections();
     $relatedModel = $relationship->getRelated();
-    $collectionCount = $model->productCollections->count();
+    $collectionCount = $model->collections->count();
 
     expect($collectionCount)->toBe(3);
     expect($relationship)->toBeInstanceOf(BelongsToMany::class);
-    expect($relatedModel)->toBeInstanceOf(\Gildsmith\Contract\Product\ProductCollectionInterface::class);
+    expect($relatedModel)->toBeInstanceOf(ProductCollectionInterface::class);
 });

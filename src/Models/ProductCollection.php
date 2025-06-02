@@ -8,6 +8,7 @@ use Gildsmith\Contract\Product\ProductCollectionInterface;
 use Gildsmith\Contract\Product\ProductInterface;
 use Gildsmith\Product\Database\Factories\ProductCollectionFactory;
 use Gildsmith\Support\Model\Concerns\HasAbstractRelationships;
+use Gildsmith\Support\Utils\ValidationRules;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -20,6 +21,11 @@ class ProductCollection extends Model implements ProductCollectionInterface
     use HasTranslations;
 
     protected array $translatable = ['name'];
+
+    public array $rules = [
+        'code' => ValidationRules::CODE,
+        'type' => ValidationRules::CODE,
+    ];
 
     protected static function newFactory(): ProductCollectionFactory
     {

@@ -10,6 +10,7 @@ use Gildsmith\Contract\Product\ProductCollectionInterface;
 use Gildsmith\Contract\Product\ProductInterface;
 use Gildsmith\Product\Database\Factories\ProductFactory;
 use Gildsmith\Support\Model\Concerns\HasAbstractRelationships;
+use Gildsmith\Support\Utils\ValidationRules;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -24,6 +25,10 @@ class Product extends Model implements ProductInterface
 
     protected array $translatable = ['name'];
 
+    public array $rules = [
+        'code' => ValidationRules::CODE,
+    ];
+
     protected static function newFactory(): ProductFactory
     {
         return ProductFactory::new();
@@ -34,7 +39,7 @@ class Product extends Model implements ProductInterface
         return $this->belongsTo(BlueprintInterface::class);
     }
 
-    public function productCollections(): BelongsToMany
+    public function collections(): BelongsToMany
     {
         return $this->belongsToMany(ProductCollectionInterface::class);
     }

@@ -9,6 +9,7 @@ use Gildsmith\Contract\Product\BlueprintInterface;
 use Gildsmith\Contract\Product\ProductInterface;
 use Gildsmith\Product\Database\Factories\BlueprintFactory;
 use Gildsmith\Support\Model\Concerns\HasAbstractRelationships;
+use Gildsmith\Support\Utils\ValidationRules;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -24,6 +25,10 @@ class Blueprint extends Model implements BlueprintInterface
     public $timestamps = false;
 
     protected array $translatable = ['name'];
+
+    public array $rules = [
+        'code' => ValidationRules::CODE,
+    ];
 
     protected static function newFactory(): BlueprintFactory
     {

@@ -9,6 +9,7 @@ use Gildsmith\Contract\Product\AttributeValueInterface;
 use Gildsmith\Contract\Product\ProductInterface;
 use Gildsmith\Product\Database\Factories\AttributeValueFactory;
 use Gildsmith\Support\Model\Concerns\HasAbstractRelationships;
+use Gildsmith\Support\Utils\ValidationRules;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -22,6 +23,10 @@ class AttributeValue extends Model implements AttributeValueInterface
     use HasTranslations;
 
     public array $translatable = ['name'];
+
+    public array $rules = [
+        'code' => ValidationRules::CODE,
+    ];
 
     public $timestamps = false;
 
