@@ -16,7 +16,7 @@ class AttributeValueFactory extends Factory
     {
         return [
             'attribute_id' => Attribute::factory(),
-            'code' => $this->faker->unique()->regexify('[a-z0-9._]{8}'),
+            'code' => $this->faker->unique()->regexify('[a-z0-9_]{8}'),
             'name' => [
                 'en' => ucfirst($this->faker->word),
                 'pl' => ucfirst($this->faker->word),
