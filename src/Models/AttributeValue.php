@@ -24,6 +24,8 @@ class AttributeValue extends Model implements AttributeValueInterface
 
     public array $translatable = ['name'];
 
+    protected array $fillable = ['name'];
+
     public array $rules = [
         'code' => ValidationRules::CODE,
     ];

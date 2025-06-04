@@ -24,6 +24,8 @@ class Attribute extends Model implements AttributeInterface
 
     public array $translatable = ['name'];
 
+    protected array $fillable = ['name'];
+
     public $timestamps = false;
 
     public array $rules = [
