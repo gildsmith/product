@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('code')->unique();
             $table->json('name');
 
-            $table->foreignId('attribute_id')->constrained()->cascadeOnUpdate()->cascadeOnUpdate();
+            $table->foreignId('attribute_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 
