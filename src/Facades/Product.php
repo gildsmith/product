@@ -6,57 +6,43 @@ namespace Gildsmith\Product\Facades;
 
 use Gildsmith\Contract\Facades\Product as ProductFacadeInterface;
 use Gildsmith\Contract\Product\ProductInterface;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 
 class Product implements ProductFacadeInterface
 {
-    public function find(string $code, bool $withTrashed = false): ?ProductInterface
-    {
-        /** @var ProductInterface $model */
-        $model = resolve(ProductInterface::class);
-
-        $query = $withTrashed && method_exists($model, 'getDeletedAtColumn')
-            ? $model::withTrashed()
-            : $model::query();
-
-        return $query->where('code', $code)->first();
-    }
-
     public function all(bool $withTrashed = false): Collection
     {
-        /** @var ProductInterface $model */
-        $model = resolve(ProductInterface::class);
+        /** @var Builder $builder */
+        $builder = resolve(ProductInterface::class);
 
-        $query = $withTrashed && method_exists($model, 'getDeletedAtColumn')
-            ? $model::withTrashed()
-            : $model::query();
-
-        return $query->get();
+        return $withTrashed
+            ? $builder::withTrashed()->get()
+            : $builder->get();
     }
 
     public function trashed(): Collection
     {
-        /** @var ProductInterface $model */
-        $model = resolve(ProductInterface::class);
+        /** @var Builder $builder */
+        $builder = resolve(ProductInterface::class);
 
-        return method_exists($model, 'onlyTrashed')
-            ? $model::onlyTrashed()->get()
-            : collect();
+        return $builder::onlyTrashed()->get();
     }
 
     public function create(array $data): ProductInterface
     {
-        /** @var ProductInterface $model */
-        $model = resolve(ProductInterface::class);
+        /** @var Builder $builder */
+        $builder = resolve(ProductInterface::class);
 
-        return $model::create($data);
+        return $builder::create($data);
     }
 
     public function update(string $code, array $data): ProductInterface
     {
         $product = $this->find($code, true);
 
-        if (! $product) {
+        if (!$product) {
             throw new \InvalidArgumentException("Product with code {$code} not found.");
         }
 
@@ -65,34 +51,36 @@ class Product implements ProductFacadeInterface
         return $product->fresh();
     }
 
+    public function find(string $code, bool $withTrashed = false): ?ProductInterface
+    {
+        /** @var Builder $builder */
+        $builder = resolve(ProductInterface::class);
+
+        return $withTrashed
+            ? $builder::withTrashed()->where('code', $code)->first()
+            : $builder::where('code', $code)->first();
+    }
+
     public function updateOrCreate(string $code, array $data): ProductInterface
     {
-        /** @var ProductInterface $model */
-        $model = resolve(ProductInterface::class);
+        /** @var Builder $builder */
+        $builder = resolve(ProductInterface::class);
 
-        return $model::updateOrCreate(['code' => $code], $data);
+        return $builder::updateOrCreate(['code' => $code], $data);
     }
 
     public function delete(string $code, bool $force = false): bool
     {
-        /** @var ProductInterface $model */
-        $model = resolve(ProductInterface::class);
-
-        $query = $model::where('code', $code);
-
         return $force
-            ? (bool) $query->forceDelete()
-            : (bool) $query->delete();
+            ? (bool) $this->find($code)->forceDelete()
+            : (bool) $this->find($code)->delete();
     }
 
     public function restore(string $code): bool
     {
         $product = $this->find($code, true);
 
-        if (! $product || ! method_exists($product, 'restore')) {
-            return false;
-        }
-
-        return (bool) $product->restore();
+        // todo check whether class uses SoftDeletes rather than have some method implemented.
+        return $product->restore();
     }
 }

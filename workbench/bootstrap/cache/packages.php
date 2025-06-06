@@ -1,6 +1,10 @@
 <?php return array (
   'gildsmith/support' => 
   array (
+    'aliases' => 
+    array (
+      'Product' => 'Gildsmith\\Support\\Facades\\Product',
+    ),
     'providers' => 
     array (
       0 => 'Gildsmith\\Support\\Providers\\AppServiceProvider',

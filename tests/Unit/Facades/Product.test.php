@@ -80,13 +80,14 @@ it('updates a product by code', function () {
     $model = Product::factory()->create([
         'name' => ['en' => 'Old', 'pl' => 'Old'],
     ]);
+
     $facade = resolve(ProductFacadeInterface::class);
 
     $updated = $facade->update($model->code, [
         'name' => ['en' => 'New', 'pl' => 'New'],
     ]);
 
-    expect($updated->name)->toBe(['en' => 'New', 'pl' => 'New']);
+    expect($updated->getTranslations('name'))->toBe(['en' => 'New', 'pl' => 'New']);
 });
 
 it('throws when updating unknown product', function () {
