@@ -15,8 +15,8 @@ it('finds a product by code', function () {
 
     $found = $facade->find($model->code);
 
-    expect($found)->toBeInstanceOf(ProductInterface::class)
-        ->and($found->id)->toBe($model->id);
+    expect($found)->toBeInstanceOf(ProductInterface::class);
+    expect($found->id)->toBe($model->id);
 });
 
 it('returns null when product is missing', function () {
@@ -33,8 +33,8 @@ it('can find trashed products when enabled', function () {
     $without = $facade->find($model->code);
     $with = $facade->find($model->code, true);
 
-    expect($without)->toBeNull()
-        ->and($with?->id)->toBe($model->id);
+    expect($without)->toBeNull();
+    expect($with?->id)->toBe($model->id);
 });
 
 it('returns all products optionally including trashed', function () {
@@ -46,8 +46,8 @@ it('returns all products optionally including trashed', function () {
     $all = $facade->all();
     $withTrashed = $facade->all(true);
 
-    expect($all)->toHaveCount(2)
-        ->and($withTrashed)->toHaveCount(3);
+    expect($all)->toHaveCount(2);
+    expect($withTrashed)->toHaveCount(3);
 });
 
 it('lists only trashed products', function () {
@@ -58,8 +58,8 @@ it('lists only trashed products', function () {
 
     $result = $facade->trashed();
 
-    expect($result)->toHaveCount(1)
-        ->and($result->first()->id)->toBe($trashed->id);
+    expect($result)->toHaveCount(1);
+    expect($result->first()->id)->toBe($trashed->id);
 });
 
 it('creates a product', function () {
@@ -72,8 +72,8 @@ it('creates a product', function () {
         'name' => ['en' => 'Test', 'pl' => 'Test'],
     ]);
 
-    expect($product)->toBeInstanceOf(ProductInterface::class)
-        ->and(Product::where('code', 'test_code')->exists())->toBeTrue();
+    expect($product)->toBeInstanceOf(ProductInterface::class);
+    expect(Product::where('code', 'test_code')->exists())->toBeTrue();
 });
 
 it('updates a product by code', function () {
@@ -109,8 +109,8 @@ it('updates or creates a product', function () {
         'name' => ['en' => 'Baz', 'pl' => 'Baz'],
     ]);
 
-    expect($existing->name['en'])->toBe('Bar')
-        ->and($new->code)->toBe('new_code');
+    expect($existing->name['en'])->toBe('Bar');
+    expect($new->code)->toBe('new_code');
 });
 
 it('soft deletes and force deletes products', function () {
@@ -124,8 +124,8 @@ it('soft deletes and force deletes products', function () {
     $softDeleted = Product::withTrashed()->find($soft->id);
     $forceDeleted = Product::withTrashed()->find($force->id);
 
-    expect($softDeleted->trashed())->toBeTrue()
-        ->and($forceDeleted)->toBeNull();
+    expect($softDeleted->trashed())->toBeTrue();
+    expect($forceDeleted)->toBeNull();
 });
 
 it('restores a soft deleted product', function () {
@@ -135,8 +135,8 @@ it('restores a soft deleted product', function () {
 
     $restored = $facade->restore($model->code);
 
-    expect($restored)->toBeTrue()
-        ->and(Product::find($model->id))->not->toBeNull();
+    expect($restored)->toBeTrue();
+    expect(Product::find($model->id))->not->toBeNull();
 });
 
 it('returns false when restoring missing product', function () {
