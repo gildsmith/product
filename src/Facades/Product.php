@@ -6,15 +6,28 @@ namespace Gildsmith\Product\Facades;
 
 use Gildsmith\Contract\Facades\Product as ProductFacadeInterface;
 use Gildsmith\Contract\Product\ProductInterface;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Collection;
-
-class Product implements ProductFacadeInterface
-{
-    public function all(bool $withTrashed = false): Collection
+    private function usesSoftDeletes(ProductInterface $model): bool
     {
-        /** @var Builder $builder */
+        // check trait usage; fallback to method existence if helpers are not available
+        if (function_exists('class_uses_recursive')) {
+            return in_array(SoftDeletes::class, class_uses_recursive($model), true);
+        }
+
+        return in_array(SoftDeletes::class, class_uses($model), true);
+    }
+
+        $query = $withTrashed && $this->usesSoftDeletes($model)
+        $query = $withTrashed && $this->usesSoftDeletes($model)
+        return $this->usesSoftDeletes($model)
+
+        if ($force && $this->usesSoftDeletes($model)) {
+            return (bool) $query->forceDelete();
+        }
+
+        return (bool) $query->delete();
+    {
+        if (! $product || ! $this->usesSoftDeletes($product)) {
         $builder = resolve(ProductInterface::class);
 
         return $withTrashed
