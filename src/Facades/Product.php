@@ -7,14 +7,17 @@ namespace Gildsmith\Product\Facades;
 use Gildsmith\Contract\Facades\Product as ProductFacadeInterface;
 use Gildsmith\Contract\Product\ProductInterface;
 use Illuminate\Database\Eloquent\SoftDeletes;
-    private function usesSoftDeletes(ProductInterface $model): bool
+    private function usesSoftDeletes(ProductInterface|string $model): bool
     {
-        // check trait usage; fallback to method existence if helpers are not available
+        $class = is_object($model) ? get_class($model) : $model;
+
         if (function_exists('class_uses_recursive')) {
-            return in_array(SoftDeletes::class, class_uses_recursive($model), true);
+            $uses = class_uses_recursive($class);
+        } else {
+            $uses = class_uses($class);
         }
 
-        return in_array(SoftDeletes::class, class_uses($model), true);
+        return in_array(SoftDeletes::class, $uses, true);
     }
 
         $query = $withTrashed && $this->usesSoftDeletes($model)
