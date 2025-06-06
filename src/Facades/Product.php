@@ -42,7 +42,7 @@ class Product implements ProductFacadeInterface
     {
         $product = $this->find($code, true);
 
-        if (!$product) {
+        if (! $product) {
             throw new \InvalidArgumentException("Product with code {$code} not found.");
         }
 
