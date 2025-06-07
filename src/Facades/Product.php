@@ -6,47 +6,75 @@ namespace Gildsmith\Product\Facades;
 
 use Gildsmith\Contract\Facades\Product as ProductFacadeInterface;
 use Gildsmith\Contract\Product\ProductInterface;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
 class Product implements ProductFacadeInterface
 {
-    public function find(string $code, bool $withTrashed = false): ?ProductInterface
-    {
-        // TODO: Implement find() method.
-    }
-
     public function all(bool $withTrashed = false): Collection
     {
-        // TODO: Implement all() method.
+        /** @var Builder $builder */
+        $builder = resolve(ProductInterface::class);
+
+        return $withTrashed
+            ? $builder::withTrashed()->get()
+            : $builder->get();
     }
 
     public function trashed(): Collection
     {
-        // TODO: Implement trashed() method.
+        /** @var Builder $builder */
+        $builder = resolve(ProductInterface::class);
+
+        return $builder::onlyTrashed()->get();
     }
 
     public function create(array $data): ProductInterface
     {
-        // TODO: Implement create() method.
+        /** @var Builder $builder */
+        $builder = resolve(ProductInterface::class);
+
+        return $builder::create($data);
     }
 
     public function update(string $code, array $data): ProductInterface
     {
-        // TODO: Implement update() method.
+        $product = $this->find($code, true);
+
+        $product->update($data);
+
+        return $product->fresh();
+    }
+
+    public function find(string $code, bool $withTrashed = false): ?ProductInterface
+    {
+        /** @var Builder $builder */
+        $builder = resolve(ProductInterface::class);
+
+        return $withTrashed
+            ? $builder::withTrashed()->where('code', $code)->first()
+            : $builder::where('code', $code)->first();
     }
 
     public function updateOrCreate(string $code, array $data): ProductInterface
     {
-        // TODO: Implement updateOrCreate() method.
+        /** @var Builder $builder */
+        $builder = resolve(ProductInterface::class);
+
+        return $builder::updateOrCreate(['code' => $code], $data);
     }
 
     public function delete(string $code, bool $force = false): bool
     {
-        // TODO: Implement delete() method.
+        $product = $this->find($code);
+
+        return $force
+            ? (bool) $product->forceDelete()
+            : (bool) $product->delete();
     }
 
     public function restore(string $code): bool
     {
-        // TODO: Implement restore() method.
+        return $this->find($code, true)->restore();
     }
 }
