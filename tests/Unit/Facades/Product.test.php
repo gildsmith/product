@@ -62,6 +62,15 @@ it('lists only trashed products', function () {
     expect($result->first()->id)->toBe($trashed->id);
 });
 
+it('returns an empty collection when nothing is trashed', function () {
+    Product::factory()->count(2)->create();
+    $facade = resolve(ProductFacadeInterface::class);
+
+    $result = $facade->trashed();
+
+    expect($result)->toHaveCount(0);
+});
+
 it('creates a product', function () {
     $blueprint = Blueprint::factory()->create();
     $facade = resolve(ProductFacadeInterface::class);
@@ -104,6 +113,12 @@ it('updates or creates a product', function () {
     $existing = $facade->updateOrCreate('foo', [
         'name' => ['en' => 'Bar', 'pl' => 'Bar'],
     ]);
+
+it('returns false when deleting unknown product', function () {
+    $facade = resolve(ProductFacadeInterface::class);
+
+    expect($facade->delete('missing-code'))->toBeFalse();
+});
 
     $new = $facade->updateOrCreate('new_code', [
         'blueprint_id' => Blueprint::factory()->create()->id,
