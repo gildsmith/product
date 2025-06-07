@@ -7,7 +7,6 @@ namespace Gildsmith\Product\Facades;
 use Gildsmith\Contract\Facades\Product as ProductFacadeInterface;
 use Gildsmith\Contract\Product\ProductInterface;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 
 class Product implements ProductFacadeInterface
@@ -42,10 +41,6 @@ class Product implements ProductFacadeInterface
     {
         $product = $this->find($code, true);
 
-        if (!$product) {
-            throw new \InvalidArgumentException("Product with code {$code} not found.");
-        }
-
         $product->update($data);
 
         return $product->fresh();
@@ -71,16 +66,15 @@ class Product implements ProductFacadeInterface
 
     public function delete(string $code, bool $force = false): bool
     {
+        $product = $this->find($code);
+
         return $force
-            ? (bool) $this->find($code)->forceDelete()
-            : (bool) $this->find($code)->delete();
+            ? (bool) $product->forceDelete()
+            : (bool) $product->delete();
     }
 
     public function restore(string $code): bool
     {
-        $product = $this->find($code, true);
-
-        // todo check whether class uses SoftDeletes rather than have some method implemented.
-        return $product->restore();
+        return $this->find($code, true)->restore();
     }
 }
