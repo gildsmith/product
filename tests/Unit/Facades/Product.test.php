@@ -114,11 +114,11 @@ it('updates or creates a product', function () {
         'name' => ['en' => 'Bar', 'pl' => 'Bar'],
     ]);
 
-it('returns false when deleting unknown product', function () {
-    $facade = resolve(ProductFacadeInterface::class);
+    it('returns false when deleting unknown product', function () {
+        $facade = resolve(ProductFacadeInterface::class);
 
-    expect($facade->delete('missing-code'))->toBeFalse();
-});
+        expect($facade->delete('missing-code'))->toBeFalse();
+    });
 
     $new = $facade->updateOrCreate('new_code', [
         'blueprint_id' => Blueprint::factory()->create()->id,
