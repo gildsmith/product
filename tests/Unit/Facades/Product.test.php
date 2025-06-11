@@ -31,7 +31,7 @@ describe('all method', function () {
 
     it('throws an exception if SoftDeletes is not used by a model', function () {
         bind(ProductInterface::class, function () {
-            return new class extends Model implements ProductInterface { };
+            return new class extends Model implements ProductInterface {};
         });
 
         ProductFacade::all(true);
@@ -43,7 +43,7 @@ describe('create method', function () {
         $mockProduct = Mockery::mock(ProductInterface::class);
         $mockProduct->allows('create')->once()->andReturns($mockProduct);
 
-        bind(ProductInterface::class, fn() => $mockProduct);
+        bind(ProductInterface::class, fn () => $mockProduct);
 
         ProductFacade::create([]);
     });
@@ -73,7 +73,7 @@ describe('trashed method', function () {
 
     it('throws an exception if SoftDeletes is not used by a model', function () {
         bind(ProductInterface::class, function () {
-            return new class implements ProductInterface { };
+            return new class implements ProductInterface {};
         });
 
         ProductFacade::trashed();
