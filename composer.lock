@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a47db829fee77f408a58cf1b76b7d917",
+    "content-hash": "5c494c21eaed0c93c8483ef3eb190dfa",
     "packages": [
         {
             "name": "brick/math",
@@ -6396,16 +6396,16 @@
         },
         {
             "name": "laravel/pail",
-            "version": "v1.2.2",
+            "version": "v1.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/pail.git",
-                "reference": "f31f4980f52be17c4667f3eafe034e6826787db2"
+                "reference": "8cc3d575c1f0e57eeb923f366a37528c50d2385a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/pail/zipball/f31f4980f52be17c4667f3eafe034e6826787db2",
-                "reference": "f31f4980f52be17c4667f3eafe034e6826787db2",
+                "url": "https://api.github.com/repos/laravel/pail/zipball/8cc3d575c1f0e57eeb923f366a37528c50d2385a",
+                "reference": "8cc3d575c1f0e57eeb923f366a37528c50d2385a",
                 "shasum": ""
             },
             "require": {
@@ -6425,7 +6425,7 @@
                 "orchestra/testbench-core": "^8.13|^9.0|^10.0",
                 "pestphp/pest": "^2.20|^3.0",
                 "pestphp/pest-plugin-type-coverage": "^2.3|^3.0",
-                "phpstan/phpstan": "^1.10",
+                "phpstan/phpstan": "^1.12.27",
                 "symfony/var-dumper": "^6.3|^7.0"
             },
             "type": "library",
@@ -6461,6 +6461,7 @@
             "description": "Easily delve into your Laravel application's log files directly from the command line.",
             "homepage": "https://github.com/laravel/pail",
             "keywords": [
+                "dev",
                 "laravel",
                 "logs",
                 "php",
@@ -6470,7 +6471,7 @@
                 "issues": "https://github.com/laravel/pail/issues",
                 "source": "https://github.com/laravel/pail"
             },
-            "time": "2025-01-28T15:15:15+00:00"
+            "time": "2025-06-05T13:55:57+00:00"
         },
         {
             "name": "laravel/pint",
@@ -7045,16 +7046,16 @@
         },
         {
             "name": "orchestra/sidekick",
-            "version": "v1.2.11",
+            "version": "v1.2.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/sidekick.git",
-                "reference": "da310142e73935ca01de44104c64399b2da9fab1"
+                "reference": "c182e9f91d7aa68417eae0585e004fbbc7beac26"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/sidekick/zipball/da310142e73935ca01de44104c64399b2da9fab1",
-                "reference": "da310142e73935ca01de44104c64399b2da9fab1",
+                "url": "https://api.github.com/repos/orchestral/sidekick/zipball/c182e9f91d7aa68417eae0585e004fbbc7beac26",
+                "reference": "c182e9f91d7aa68417eae0585e004fbbc7beac26",
                 "shasum": ""
             },
             "require": {
@@ -7096,9 +7097,9 @@
             "description": "Packages Toolkit Utilities and Helpers for Laravel",
             "support": {
                 "issues": "https://github.com/orchestral/sidekick/issues",
-                "source": "https://github.com/orchestral/sidekick/tree/v1.2.11"
+                "source": "https://github.com/orchestral/sidekick/tree/v1.2.12"
             },
-            "time": "2025-06-02T15:06:32+00:00"
+            "time": "2025-06-08T03:58:04+00:00"
         },
         {
             "name": "orchestra/testbench",
@@ -7157,21 +7158,21 @@
         },
         {
             "name": "orchestra/testbench-core",
-            "version": "v10.3.0",
+            "version": "v10.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench-core.git",
-                "reference": "3cacf7bc512665b9eb6d2380bb4433574458a557"
+                "reference": "d1c45a7be15c4d99fb7d48685b038dd39acc7b84"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/3cacf7bc512665b9eb6d2380bb4433574458a557",
-                "reference": "3cacf7bc512665b9eb6d2380bb4433574458a557",
+                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/d1c45a7be15c4d99fb7d48685b038dd39acc7b84",
+                "reference": "d1c45a7be15c4d99fb7d48685b038dd39acc7b84",
                 "shasum": ""
             },
             "require": {
                 "composer-runtime-api": "^2.2",
-                "orchestra/sidekick": "^1.1.5|^1.2.0",
+                "orchestra/sidekick": "~1.1.16|^1.2.12",
                 "php": "^8.2",
                 "symfony/deprecation-contracts": "^2.5|^3.0",
                 "symfony/polyfill-php83": "^1.32"
@@ -7181,7 +7182,7 @@
                 "laravel/framework": "<12.8.0|>=13.0.0",
                 "laravel/serializable-closure": "<1.3.0|>=2.0.0 <2.0.3|>=3.0.0",
                 "nunomaduro/collision": "<8.0.0|>=9.0.0",
-                "phpunit/phpunit": "<10.5.35|>=11.0.0 <11.5.3|12.0.0|>=12.2.0"
+                "phpunit/phpunit": "<10.5.35|>=11.0.0 <11.5.3|12.0.0|>=12.3.0"
             },
             "require-dev": {
                 "fakerphp/faker": "^1.24",
@@ -7246,7 +7247,7 @@
                 "issues": "https://github.com/orchestral/testbench/issues",
                 "source": "https://github.com/orchestral/testbench-core"
             },
-            "time": "2025-05-12T05:41:57+00:00"
+            "time": "2025-06-08T04:36:36+00:00"
         },
         {
             "name": "orchestra/workbench",

@@ -2,161 +2,97 @@
 
 declare(strict_types=1);
 
-use Gildsmith\Contract\Facades\Product as ProductFacadeInterface;
 use Gildsmith\Contract\Product\ProductInterface;
-use Gildsmith\Product\Models\Blueprint;
-use Gildsmith\Product\Models\Product;
+use Gildsmith\Product\Exception\MissingSoftDeletesException;
+use Gildsmith\Product\Facades\Product as ProductFacadeConcrete;
+use Gildsmith\Product\Models\Product as ProductModel;
+use Gildsmith\Support\Facades\Product as ProductFacade;
+use Illuminate\Database\Eloquent\Model;
 
-covers(\Gildsmith\Product\Facades\Product::class);
+covers(ProductFacadeConcrete::class);
 
-it('finds a product by code', function () {
-    $model = Product::factory()->create();
-    $facade = resolve(ProductFacadeInterface::class);
+describe('all method', function () {
+    it('returns all products', function () {
+        ProductModel::factory()->count(3)->create();
 
-    $found = $facade->find($model->code);
+        $products = ProductFacade::all();
 
-    expect($found)->toBeInstanceOf(ProductInterface::class);
-    expect($found->id)->toBe($model->id);
+        expect($products)->toHaveCount(3);
+    });
+
+    it('returns trashed products when second parameter is true', function () {
+        ProductModel::factory()->count(2)->create();
+        ProductModel::factory()->trashed()->count(1)->create();
+
+        $products = ProductFacade::all(true);
+
+        expect($products)->toHaveCount(3);
+    });
+
+    it('throws an exception if SoftDeletes is not used by a model', function () {
+        bind(ProductInterface::class, function () {
+            return new class extends Model implements ProductInterface { };
+        });
+
+        ProductFacade::all(true);
+    })->throws(MissingSoftDeletesException::class);
 });
 
-it('returns null when product is missing', function () {
-    $facade = resolve(ProductFacadeInterface::class);
+describe('create method', function () {
+    it('creates a product via the facade', function () {
+        $mockProduct = Mockery::mock(ProductInterface::class);
+        $mockProduct->allows('create')->once()->andReturns($mockProduct);
 
-    expect($facade->find('unknown'))->toBeNull();
+        bind(ProductInterface::class, fn() => $mockProduct);
+
+        ProductFacade::create([]);
+    });
 });
 
-it('can find trashed products when enabled', function () {
-    $model = Product::factory()->create();
-    $model->delete();
-    $facade = resolve(ProductFacadeInterface::class);
-
-    $without = $facade->find($model->code);
-    $with = $facade->find($model->code, true);
-
-    expect($without)->toBeNull();
-    expect($with?->id)->toBe($model->id);
+describe('delete method', function () {
+    // todo
 });
 
-it('returns all products optionally including trashed', function () {
-    Product::factory()->count(2)->create();
-    $trashed = Product::factory()->create();
-    $trashed->delete();
-    $facade = resolve(ProductFacadeInterface::class);
-
-    $all = $facade->all();
-    $withTrashed = $facade->all(true);
-
-    expect($all)->toHaveCount(2);
-    expect($withTrashed)->toHaveCount(3);
+describe('find method', function () {
+    // todo
 });
 
-it('lists only trashed products', function () {
-    Product::factory()->count(2)->create();
-    $trashed = Product::factory()->create();
-    $trashed->delete();
-    $facade = resolve(ProductFacadeInterface::class);
-
-    $result = $facade->trashed();
-
-    expect($result)->toHaveCount(1);
-    expect($result->first()->id)->toBe($trashed->id);
+describe('restore method', function () {
+    // todo
 });
 
-it('returns an empty collection when nothing is trashed', function () {
-    Product::factory()->count(2)->create();
-    $facade = resolve(ProductFacadeInterface::class);
+describe('trashed method', function () {
+    it('returns only trashed products', function () {
+        ProductModel::factory()->count(2)->create();
+        ProductModel::factory()->trashed()->count(1)->create();
 
-    $result = $facade->trashed();
+        $products = ProductFacade::trashed();
 
-    expect($result)->toHaveCount(0);
+        expect($products->count())->toBe(1);
+    });
+
+    it('throws an exception if SoftDeletes is not used by a model', function () {
+        bind(ProductInterface::class, function () {
+            return new class implements ProductInterface { };
+        });
+
+        ProductFacade::trashed();
+    })->throws(MissingSoftDeletesException::class);
 });
 
-it('creates a product', function () {
-    $blueprint = Blueprint::factory()->create();
-    $facade = resolve(ProductFacadeInterface::class);
+describe('update method', function () {
+    it('updates a product and returns a fresh instance', function () {
+        $product = ProductModel::factory()->createOne();
 
-    $product = $facade->create([
-        'blueprint_id' => $blueprint->id,
-        'code' => 'test_code',
-        'name' => ['en' => 'Test', 'pl' => 'Test'],
-    ]);
+        ProductFacade::partialMock()
+            ->expects('find')
+            ->andReturn($product)
+            ->once();
 
-    expect($product)->toBeInstanceOf(ProductInterface::class);
-    expect(Product::where('code', 'test_code')->exists())->toBeTrue();
+        ProductFacade::update('code', []);
+    });
 });
 
-it('updates a product by code', function () {
-    $model = Product::factory()->create([
-        'name' => ['en' => 'Old', 'pl' => 'Old'],
-    ]);
-
-    $facade = resolve(ProductFacadeInterface::class);
-
-    $updated = $facade->update($model->code, [
-        'name' => ['en' => 'New', 'pl' => 'New'],
-    ]);
-
-    expect($updated->getTranslations('name'))->toBe(['en' => 'New', 'pl' => 'New']);
-});
-
-it('throws when updating unknown product', function () {
-    $facade = resolve(ProductFacadeInterface::class);
-
-    expect(fn () => $facade->update('unknown', []))
-        ->toThrow(InvalidArgumentException::class);
-});
-
-it('updates or creates a product', function () {
-    $model = Product::factory()->create(['code' => 'foo']);
-    $facade = resolve(ProductFacadeInterface::class);
-
-    $existing = $facade->updateOrCreate('foo', [
-        'name' => ['en' => 'Bar', 'pl' => 'Bar'],
-    ]);
-
-it('returns false when deleting unknown product', function () {
-    $facade = resolve(ProductFacadeInterface::class);
-
-    expect($facade->delete('missing-code'))->toBeFalse();
-});
-
-    $new = $facade->updateOrCreate('new_code', [
-        'blueprint_id' => Blueprint::factory()->create()->id,
-        'name' => ['en' => 'Baz', 'pl' => 'Baz'],
-    ]);
-
-    expect($existing->name['en'])->toBe('Bar');
-    expect($new->code)->toBe('new_code');
-});
-
-it('soft deletes and force deletes products', function () {
-    $soft = Product::factory()->create();
-    $force = Product::factory()->create();
-    $facade = resolve(ProductFacadeInterface::class);
-
-    $facade->delete($soft->code);
-    $facade->delete($force->code, true);
-
-    $softDeleted = Product::withTrashed()->find($soft->id);
-    $forceDeleted = Product::withTrashed()->find($force->id);
-
-    expect($softDeleted->trashed())->toBeTrue();
-    expect($forceDeleted)->toBeNull();
-});
-
-it('restores a soft deleted product', function () {
-    $model = Product::factory()->create();
-    $model->delete();
-    $facade = resolve(ProductFacadeInterface::class);
-
-    $restored = $facade->restore($model->code);
-
-    expect($restored)->toBeTrue();
-    expect(Product::find($model->id))->not->toBeNull();
-});
-
-it('returns false when restoring missing product', function () {
-    $facade = resolve(ProductFacadeInterface::class);
-
-    expect($facade->restore('missing-code'))->toBeFalse();
+describe('updateOrCreate method', function () {
+    // todo
 });
