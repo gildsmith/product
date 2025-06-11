@@ -27,6 +27,8 @@ class Product extends Model implements ProductInterface
 
     protected array $translatable = ['name'];
 
+    protected $fillable = ['name'];
+
     public array $rules = [
         'code' => ValidationRules::CODE,
     ];

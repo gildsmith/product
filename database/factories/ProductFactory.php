@@ -7,6 +7,7 @@ namespace Gildsmith\Product\Database\Factories;
 use Gildsmith\Product\Models\Blueprint;
 use Gildsmith\Product\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Carbon;
 
 class ProductFactory extends Factory
 {
@@ -22,5 +23,12 @@ class ProductFactory extends Factory
                 'pl' => ucfirst($this->faker->word),
             ],
         ];
+    }
+
+    public function trashed(): self
+    {
+        return $this->state(fn () => [
+            'deleted_at' => Carbon::now(),
+        ]);
     }
 }

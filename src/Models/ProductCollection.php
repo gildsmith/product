@@ -22,6 +22,8 @@ class ProductCollection extends Model implements ProductCollectionInterface
 
     protected array $translatable = ['name'];
 
+    protected $fillable = ['name', 'type'];
+
     public array $rules = [
         'code' => ValidationRules::CODE,
         'type' => ValidationRules::CODE,
