@@ -28,7 +28,9 @@ class Product implements ProductFacadeInterface
 
         $withTrashed && $this->ensureSoftDeletes($builder);
 
-        return $withTrashed ? $builder::withTrashed()->get() : $builder->get();
+        return $withTrashed
+            ? $builder::withTrashed()->get()
+            : $builder->get();
     }
 
     public function create(array $data): ProductInterface
