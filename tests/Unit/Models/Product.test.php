@@ -5,12 +5,12 @@ declare(strict_types=1);
 use Gildsmith\Contract\Product\AttributeValueInterface;
 use Gildsmith\Contract\Product\BlueprintInterface;
 use Gildsmith\Contract\Product\ProductCollectionInterface;
-use Gildsmith\Product\Models\Product;
 use Gildsmith\Product\Database\Factories\ProductFactory;
+use Gildsmith\Product\Models\Product;
 use Gildsmith\Support\Utils\ValidationRules;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 covers(Product::class);
 
@@ -55,19 +55,19 @@ it('uses soft deletes', function () {
 });
 
 it('has translatable name attribute', function () {
-    $model = new Product();
+    $model = new Product;
 
     expect($model->getTranslatableAttributes())->toContain('name');
 });
 
 it('has name fillable', function () {
-    $model = new Product();
+    $model = new Product;
 
     expect($model->getFillable())->toBe(['name']);
 });
 
 it('defines validation rules for code', function () {
-    $model = new Product();
+    $model = new Product;
 
     expect($model->rules['code'])->toBe(ValidationRules::CODE);
 });
