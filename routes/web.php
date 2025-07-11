@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use Gildsmith\Product\Controllers\Product\ProductIndexController;
 use Gildsmith\Product\Controllers\Product\ProductCreateController;
 use Gildsmith\Product\Controllers\Product\ProductDeleteController;
 use Gildsmith\Product\Controllers\Product\ProductFindController;
+use Gildsmith\Product\Controllers\Product\ProductIndexController;
 use Gildsmith\Product\Controllers\Product\ProductRestoreController;
 use Gildsmith\Product\Controllers\Product\ProductTrashedController;
 use Gildsmith\Product\Controllers\Product\ProductUpdateController;
