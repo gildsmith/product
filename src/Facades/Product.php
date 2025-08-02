@@ -21,9 +21,7 @@ class Product implements ProductFacadeInterface
      */
     public function all(bool $withTrashed = false): Collection
     {
-        /**
-         * @var Builder $builder
-         */
+        /** @var Builder $builder */
         $builder = resolve(ProductInterface::class);
 
         $withTrashed && $this->ensureSoftDeletes($builder);
@@ -35,9 +33,7 @@ class Product implements ProductFacadeInterface
 
     public function create(array $data): ProductInterface
     {
-        /**
-         * @var Builder $builder
-         */
+        /** @var Builder $builder */
         $builder = resolve(ProductInterface::class);
 
         return $builder::create($data);
@@ -64,9 +60,7 @@ class Product implements ProductFacadeInterface
      */
     public function find(string $code, bool $withTrashed = false): ?ProductInterface
     {
-        /**
-         * @var Builder $builder
-         */
+        /** @var Builder $builder */
         $builder = resolve(ProductInterface::class);
 
         $withTrashed && $this->ensureSoftDeletes($builder);
@@ -81,9 +75,7 @@ class Product implements ProductFacadeInterface
      */
     public function restore(string $code): bool
     {
-        /**
-         * @var SoftDeletes $model
-         */
+        /** @var SoftDeletes $model */
         $model = $this->find($code, true);
 
         $this->ensureSoftDeletes($model);
@@ -98,9 +90,7 @@ class Product implements ProductFacadeInterface
      */
     public function trashed(): Collection
     {
-        /**
-         * @var Builder $builder
-         */
+        /** @var Builder $builder */
         $builder = resolve(ProductInterface::class);
 
         $this->ensureSoftDeletes($builder);
@@ -122,9 +112,7 @@ class Product implements ProductFacadeInterface
 
     public function updateOrCreate(string $code, array $data): ProductInterface
     {
-        /**
-         * @var Builder $builder
-         */
+        /** @var Builder $builder */
         $builder = resolve(ProductInterface::class);
 
         return $builder::updateOrCreate(['code' => $code], $data);
