@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5c494c21eaed0c93c8483ef3eb190dfa",
+    "content-hash": "b65da4d81672cbca82c0c27183605009",
     "packages": [
         {
             "name": "brick/math",
@@ -587,12 +587,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/gildsmith/contract.git",
-                "reference": "afdde439595b0fe807bbb0a740d49e3332fd1077"
+                "reference": "1c4777c17cfbc3e45472b3e2467408e1bc9278a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gildsmith/contract/zipball/afdde439595b0fe807bbb0a740d49e3332fd1077",
-                "reference": "afdde439595b0fe807bbb0a740d49e3332fd1077",
+                "url": "https://api.github.com/repos/gildsmith/contract/zipball/1c4777c17cfbc3e45472b3e2467408e1bc9278a3",
+                "reference": "1c4777c17cfbc3e45472b3e2467408e1bc9278a3",
                 "shasum": ""
             },
             "require-dev": {
@@ -620,7 +620,7 @@
                 "issues": "https://github.com/gildsmith/contract/issues",
                 "source": "https://github.com/gildsmith/contract/tree/master"
             },
-            "time": "2025-06-04T20:16:19+00:00"
+            "time": "2025-08-02T21:07:02+00:00"
         },
         {
             "name": "gildsmith/support",
