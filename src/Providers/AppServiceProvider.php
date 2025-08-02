@@ -4,12 +4,20 @@ declare(strict_types=1);
 
 namespace Gildsmith\Product\Providers;
 
+use Gildsmith\Contract\Facades\Product\AttributeFacadeInterface;
+use Gildsmith\Contract\Facades\Product\AttributeValueFacadeInterface;
+use Gildsmith\Contract\Facades\Product\BlueprintFacadeInterface;
+use Gildsmith\Contract\Facades\Product\ProductCollectionFacadeInterface;
 use Gildsmith\Contract\Facades\ProductFacadeInterface;
 use Gildsmith\Contract\Product\AttributeInterface;
 use Gildsmith\Contract\Product\AttributeValueInterface;
 use Gildsmith\Contract\Product\BlueprintInterface;
 use Gildsmith\Contract\Product\ProductCollectionInterface;
 use Gildsmith\Contract\Product\ProductInterface;
+use Gildsmith\Product\Facades\AttributeFacade;
+use Gildsmith\Product\Facades\AttributeValueFacade;
+use Gildsmith\Product\Facades\BlueprintFacade;
+use Gildsmith\Product\Facades\ProductCollectionFacade;
 use Gildsmith\Product\Facades\ProductFacade;
 use Gildsmith\Product\Models\Attribute;
 use Gildsmith\Product\Models\AttributeValue;
@@ -22,8 +30,18 @@ final class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        // Facade
+        // Ensure backwards compatibility with older facade accessor
+        if (! interface_exists('\\Gildsmith\\Contract\\Facades\\Product')) {
+            class_alias(ProductFacadeInterface::class, '\\Gildsmith\\Contract\\Facades\\Product');
+        }
+
+        // Facades
         $this->app->bind(ProductFacadeInterface::class, fn () => new ProductFacade);
+        $this->app->bind('Gildsmith\\Contract\\Facades\\Product', fn () => new ProductFacade);
+        $this->app->bind(AttributeFacadeInterface::class, fn () => new AttributeFacade);
+        $this->app->bind(AttributeValueFacadeInterface::class, fn () => new AttributeValueFacade);
+        $this->app->bind(BlueprintFacadeInterface::class, fn () => new BlueprintFacade);
+        $this->app->bind(ProductCollectionFacadeInterface::class, fn () => new ProductCollectionFacade);
 
         // Models
         $this->app->bind(AttributeValueInterface::class, AttributeValue::class);

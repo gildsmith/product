@@ -5,28 +5,24 @@ declare(strict_types=1);
 namespace Gildsmith\Product\Facades;
 
 use Gildsmith\Contract\Facades\Product\AttributeFacadeInterface;
-use Gildsmith\Contract\Facades\Product\AttributeValueFacadeInterface;
-use Gildsmith\Contract\Facades\Product\BlueprintFacadeInterface;
-use Gildsmith\Contract\Facades\Product\ProductCollectionFacadeInterface;
-use Gildsmith\Contract\Facades\ProductFacadeInterface;
-use Gildsmith\Contract\Product\ProductInterface;
+use Gildsmith\Contract\Product\AttributeInterface;
 use Gildsmith\Product\Exception\MissingSoftDeletesException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 
-class ProductFacade implements ProductFacadeInterface
+class AttributeFacade implements AttributeFacadeInterface
 {
     /**
-     * @return Collection<int, Model&ProductInterface>
+     * @return Collection<int, Model&AttributeInterface>
      *
      * @throws MissingSoftDeletesException
      */
     public function all(bool $withTrashed = false): Collection
     {
         /** @var Builder $builder */
-        $builder = resolve(ProductInterface::class);
+        $builder = resolve(AttributeInterface::class);
 
         $withTrashed && $this->ensureSoftDeletes($builder);
 
@@ -35,10 +31,10 @@ class ProductFacade implements ProductFacadeInterface
             : $builder->get();
     }
 
-    public function create(array $data): ProductInterface
+    public function create(array $data): AttributeInterface
     {
         /** @var Builder $builder */
-        $builder = resolve(ProductInterface::class);
+        $builder = resolve(AttributeInterface::class);
 
         return $builder::create($data);
     }
@@ -48,24 +44,24 @@ class ProductFacade implements ProductFacadeInterface
      */
     public function delete(string $code, bool $force = false): bool
     {
-        $product = $this->find($code);
+        $attribute = $this->find($code);
 
-        $force && $this->ensureSoftDeletes($product);
+        $force && $this->ensureSoftDeletes($attribute);
 
         return $force
-            ? (bool) $product->forceDelete()
-            : (bool) $product->delete();
+            ? (bool) $attribute->forceDelete()
+            : (bool) $attribute->delete();
     }
 
     /**
-     * @return (Model&ProductInterface)|null
+     * @return (Model&AttributeInterface)|null
      *
      * @throws MissingSoftDeletesException
      */
-    public function find(string $code, bool $withTrashed = false): ?ProductInterface
+    public function find(string $code, bool $withTrashed = false): ?AttributeInterface
     {
         /** @var Builder $builder */
-        $builder = resolve(ProductInterface::class);
+        $builder = resolve(AttributeInterface::class);
 
         $withTrashed && $this->ensureSoftDeletes($builder);
 
@@ -88,14 +84,14 @@ class ProductFacade implements ProductFacadeInterface
     }
 
     /**
-     * @return Collection<int, Model&ProductInterface>
+     * @return Collection<int, Model&AttributeInterface>
      *
      * @throws MissingSoftDeletesException
      */
     public function trashed(): Collection
     {
         /** @var Builder $builder */
-        $builder = resolve(ProductInterface::class);
+        $builder = resolve(AttributeInterface::class);
 
         $this->ensureSoftDeletes($builder);
 
@@ -105,41 +101,21 @@ class ProductFacade implements ProductFacadeInterface
     /**
      * @throws MissingSoftDeletesException
      */
-    public function update(string $code, array $data): ProductInterface
+    public function update(string $code, array $data): AttributeInterface
     {
-        $product = $this->find($code, true);
+        $attribute = $this->find($code, true);
 
-        $product->update($data);
+        $attribute->update($data);
 
-        return $product->fresh();
+        return $attribute->fresh();
     }
 
-    public function updateOrCreate(string $code, array $data): ProductInterface
+    public function updateOrCreate(string $code, array $data): AttributeInterface
     {
         /** @var Builder $builder */
-        $builder = resolve(ProductInterface::class);
+        $builder = resolve(AttributeInterface::class);
 
         return $builder::updateOrCreate(['code' => $code], $data);
-    }
-
-    public function attribute(): AttributeFacadeInterface
-    {
-        return resolve(AttributeFacadeInterface::class);
-    }
-
-    public function attributeValue(): AttributeValueFacadeInterface
-    {
-        return resolve(AttributeValueFacadeInterface::class);
-    }
-
-    public function blueprint(): BlueprintFacadeInterface
-    {
-        return resolve(BlueprintFacadeInterface::class);
-    }
-
-    public function collection(): ProductCollectionFacadeInterface
-    {
-        return resolve(ProductCollectionFacadeInterface::class);
     }
 
     /**
