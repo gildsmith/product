@@ -36,6 +36,7 @@ final class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->loadMigrationsFrom($this->packagePath('database/migrations'));
+        $this->loadRoutesFrom($this->packagePath('routes/api.php'));
     }
 
     /**
