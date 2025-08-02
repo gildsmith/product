@@ -5,8 +5,8 @@ declare(strict_types=1);
 use Gildsmith\Contract\Product\ProductInterface;
 use Gildsmith\Product\Exception\MissingSoftDeletesException;
 use Gildsmith\Product\Facades\ProductFacade as ProductFacadeConcrete;
-use Gildsmith\Product\Models\Product as ProductModel;
 use Gildsmith\Product\Models\Blueprint;
+use Gildsmith\Product\Models\Product as ProductModel;
 use Gildsmith\Support\Facades\Product as ProductFacade;
 use Illuminate\Database\Eloquent\Model;
 
