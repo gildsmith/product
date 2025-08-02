@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Gildsmith\Product\Facades;
 
-use Gildsmith\Contract\Facades\ProductFacadeInterface as ProductFacadeInterface;
+use Gildsmith\Contract\Facades\ProductFacadeInterface;
 use Gildsmith\Contract\Product\ProductInterface;
 use Gildsmith\Product\Exception\MissingSoftDeletesException;
 use Illuminate\Database\Eloquent\Builder;
