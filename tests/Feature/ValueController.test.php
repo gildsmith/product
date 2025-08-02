@@ -6,9 +6,10 @@ use Gildsmith\Product\Models\Attribute;
 use Gildsmith\Product\Models\AttributeValue;
 
 it('lists attribute values', function () {
-    AttributeValue::factory()->count(3)->create();
+    $attribute = Attribute::factory()->create();
+    AttributeValue::factory()->count(3)->for($attribute)->create();
 
-    $response = $this->getJson('/attribute-values');
+    $response = $this->getJson("/attributes/{$attribute->code}/values");
 
     $response->assertOk()->assertJsonCount(3);
 });
@@ -17,29 +18,28 @@ it('creates an attribute value', function () {
     $attribute = Attribute::factory()->create();
 
     $payload = [
-        'attribute_id' => $attribute->id,
         'code' => 'red',
         'name' => ['en' => 'Red', 'pl' => 'Czerwony'],
     ];
 
-    $response = $this->postJson('/attribute-values', $payload);
+    $response = $this->postJson("/attributes/{$attribute->code}/values", $payload);
 
     $response->assertCreated()->assertJsonPath('code', 'red');
-    $this->assertDatabaseHas('attribute_values', ['code' => 'red']);
+    $this->assertDatabaseHas('attribute_values', ['code' => 'red', 'attribute_id' => $attribute->id]);
 });
 
 it('shows an attribute value', function () {
-    $value = AttributeValue::factory()->create();
+    $value = AttributeValue::factory()->for(Attribute::factory())->create();
 
-    $response = $this->getJson("/attribute-values/{$value->code}");
+    $response = $this->getJson("/attributes/{$value->attribute->code}/values/{$value->code}");
 
     $response->assertOk()->assertJsonPath('code', $value->code);
 });
 
 it('updates an attribute value', function () {
-    $value = AttributeValue::factory()->create();
+    $value = AttributeValue::factory()->for(Attribute::factory())->create();
 
-    $response = $this->putJson("/attribute-values/{$value->code}", [
+    $response = $this->putJson("/attributes/{$value->attribute->code}/values/{$value->code}", [
         'name' => ['en' => 'Updated', 'pl' => 'Zaktualizowany'],
     ]);
 
@@ -48,9 +48,9 @@ it('updates an attribute value', function () {
 });
 
 it('deletes an attribute value', function () {
-    $value = AttributeValue::factory()->create();
+    $value = AttributeValue::factory()->for(Attribute::factory())->create();
 
-    $response = $this->deleteJson("/attribute-values/{$value->code}");
+    $response = $this->deleteJson("/attributes/{$value->attribute->code}/values/{$value->code}");
 
     $response->assertOk();
     expect($response->json())->toEqual(true);
