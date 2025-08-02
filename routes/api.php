@@ -2,13 +2,6 @@
 
 declare(strict_types=1);
 
-use Gildsmith\Product\Controllers\Product\ProductCreateController;
-use Gildsmith\Product\Controllers\Product\ProductDeleteController;
-use Gildsmith\Product\Controllers\Product\ProductFindController;
-use Gildsmith\Product\Controllers\Product\ProductIndexController;
-use Gildsmith\Product\Controllers\Product\ProductRestoreController;
-use Gildsmith\Product\Controllers\Product\ProductTrashedController;
-use Gildsmith\Product\Controllers\Product\ProductUpdateController;
 use Gildsmith\Product\Controllers\Attribute\AttributeCreateController;
 use Gildsmith\Product\Controllers\Attribute\AttributeDeleteController;
 use Gildsmith\Product\Controllers\Attribute\AttributeFindController;
@@ -19,6 +12,13 @@ use Gildsmith\Product\Controllers\AttributeValue\AttributeValueDeleteController;
 use Gildsmith\Product\Controllers\AttributeValue\AttributeValueFindController;
 use Gildsmith\Product\Controllers\AttributeValue\AttributeValueIndexController;
 use Gildsmith\Product\Controllers\AttributeValue\AttributeValueUpdateController;
+use Gildsmith\Product\Controllers\Product\ProductCreateController;
+use Gildsmith\Product\Controllers\Product\ProductDeleteController;
+use Gildsmith\Product\Controllers\Product\ProductFindController;
+use Gildsmith\Product\Controllers\Product\ProductIndexController;
+use Gildsmith\Product\Controllers\Product\ProductRestoreController;
+use Gildsmith\Product\Controllers\Product\ProductTrashedController;
+use Gildsmith\Product\Controllers\Product\ProductUpdateController;
 
 Route::prefix('products')->group(function () {
     Route::get('/', ProductIndexController::class);
