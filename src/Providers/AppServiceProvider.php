@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Gildsmith\Product\Providers;
 
+use Gildsmith\Contract\Facades\ProductFacadeInterface;
 use Gildsmith\Contract\Product\AttributeInterface;
 use Gildsmith\Contract\Product\AttributeValueInterface;
 use Gildsmith\Contract\Product\BlueprintInterface;
 use Gildsmith\Contract\Product\ProductCollectionInterface;
 use Gildsmith\Contract\Product\ProductInterface;
+use Gildsmith\Product\Facades\ProductFacade;
 use Gildsmith\Product\Models\Attribute;
 use Gildsmith\Product\Models\AttributeValue;
 use Gildsmith\Product\Models\Blueprint;
@@ -21,9 +23,7 @@ final class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         // Facade
-        $this->app->bind(\Gildsmith\Contract\Facades\Product::class, function () {
-            return new \Gildsmith\Product\Facades\Product;
-        });
+        $this->app->bind(ProductFacadeInterface::class, fn() => new ProductFacade);
 
         // Models
         $this->app->bind(AttributeValueInterface::class, AttributeValue::class);
