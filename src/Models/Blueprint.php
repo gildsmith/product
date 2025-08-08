@@ -49,13 +49,26 @@ class Blueprint extends Model implements BlueprintInterface
 
     public function allows(string ...$properties): bool
     {
-        // TODO: Implement allows() method.
-        return false;
+        if ($properties === []) {
+            return true;
+        }
+
+        $count = $this->attributes()->whereIn('code', $properties)->count();
+
+        return $count === count($properties);
     }
 
     public function requires(string ...$properties): bool
     {
-        // TODO: Implement requires() method.
-        return false;
+        if ($properties === []) {
+            return true;
+        }
+
+        $count = $this->attributes()
+            ->wherePivot('required', true)
+            ->whereIn('code', $properties)
+            ->count();
+
+        return $count === count($properties);
     }
 }

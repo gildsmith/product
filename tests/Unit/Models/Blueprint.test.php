@@ -2,34 +2,38 @@
 
 declare(strict_types=1);
 
-use Gildsmith\Contract\Product\AttributeInterface;
-use Gildsmith\Contract\Product\ProductInterface;
+use Gildsmith\Product\Models\Attribute;
 use Gildsmith\Product\Models\Blueprint;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 covers(Blueprint::class);
 
-it('has attributes relationship', function () {
-    $model = Blueprint::factory()->hasAttributes(3)->create();
+it('returns true when attribute codes are allowed', function () {
+    $blueprint = Blueprint::factory()->create();
+    $attribute = Attribute::factory()->create();
+    $blueprint->attributes()->attach($attribute->id);
 
-    $relationship = $model->attributes();
-    $relatedModel = $relationship?->getRelated();
-    $collectionCount = $model->attributes->count();
-
-    expect($collectionCount)->toBe(3);
-    expect($relationship)->toBeInstanceOf(BelongsToMany::class);
-    expect($relatedModel)->toBeInstanceOf(AttributeInterface::class);
+    expect($blueprint->allows($attribute->code))->toBeTrue();
 });
 
-it('has products relationship', function () {
-    $model = Blueprint::factory()->hasProducts(3)->create();
+it('returns false when attribute codes are not allowed', function () {
+    $blueprint = Blueprint::factory()->create();
+    $attribute = Attribute::factory()->create();
 
-    $relationship = $model->products();
-    $relatedModel = $relationship?->getRelated();
-    $collectionCount = $model->products->count();
+    expect($blueprint->allows($attribute->code))->toBeFalse();
+});
 
-    expect($collectionCount)->toBe(3);
-    expect($relationship)->toBeInstanceOf(HasMany::class);
-    expect($relatedModel)->toBeInstanceOf(ProductInterface::class);
+it('returns true when attribute codes are required', function () {
+    $blueprint = Blueprint::factory()->create();
+    $attribute = Attribute::factory()->create();
+    $blueprint->attributes()->attach($attribute->id, ['required' => true]);
+
+    expect($blueprint->requires($attribute->code))->toBeTrue();
+});
+
+it('returns false when attribute codes are not required', function () {
+    $blueprint = Blueprint::factory()->create();
+    $attribute = Attribute::factory()->create();
+    $blueprint->attributes()->attach($attribute->id, ['required' => false]);
+
+    expect($blueprint->requires($attribute->code))->toBeFalse();
 });
