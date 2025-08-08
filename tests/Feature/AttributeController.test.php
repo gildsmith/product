@@ -50,5 +50,5 @@ it('deletes an attribute', function () {
 
     $response->assertOk();
     expect($response->json())->toEqual(true);
-    $this->assertDatabaseMissing('attributes', ['code' => $attribute->code]);
+    $this->assertSoftDeleted('attributes', ['code' => $attribute->code]);
 });

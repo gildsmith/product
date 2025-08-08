@@ -16,6 +16,7 @@ return new class extends Migration
             $table->json('name');
 
             $table->foreignId('attribute_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->softDeletes();
         });
     }
 

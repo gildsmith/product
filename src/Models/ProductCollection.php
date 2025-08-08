@@ -12,6 +12,7 @@ use Gildsmith\Support\Utils\ValidationRules;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Translatable\HasTranslations;
 
 class ProductCollection extends Model implements ProductCollectionInterface
@@ -19,6 +20,7 @@ class ProductCollection extends Model implements ProductCollectionInterface
     use HasAbstractRelationships;
     use HasFactory;
     use HasTranslations;
+    use SoftDeletes;
 
     protected array $translatable = ['name'];
 
