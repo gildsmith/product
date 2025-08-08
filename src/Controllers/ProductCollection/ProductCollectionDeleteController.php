@@ -11,6 +11,6 @@ class ProductCollectionDeleteController extends Controller
 {
     public function __invoke(string $code): bool
     {
-        return Product::collection()->delete($code);
+        return Product::collection()->delete($code, true);
     }
 }

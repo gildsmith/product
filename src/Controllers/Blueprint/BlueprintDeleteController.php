@@ -11,6 +11,6 @@ class BlueprintDeleteController extends Controller
 {
     public function __invoke(string $code): bool
     {
-        return Product::blueprint()->delete($code);
+        return Product::blueprint()->delete($code, true);
     }
 }
