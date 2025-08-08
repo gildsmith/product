@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gildsmith\Product\Exception;
+namespace Gildsmith\Product\Exceptions;
 
 use Exception;
 
