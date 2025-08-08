@@ -14,6 +14,7 @@ return new class extends Migration
             $table->id();
             $table->string('code')->unique();
             $table->json('name');
+            $table->softDeletes();
         });
     }
 
