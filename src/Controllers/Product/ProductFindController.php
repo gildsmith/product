@@ -6,8 +6,8 @@ namespace Gildsmith\Product\Controllers\Product;
 
 use Gildsmith\Contract\Product\ProductInterface;
 use Gildsmith\Support\Facades\Product;
-use Illuminate\Http\Response;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 
 class ProductFindController extends Controller
