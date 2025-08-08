@@ -12,6 +12,11 @@ use Gildsmith\Product\Controllers\AttributeValue\AttributeValueDeleteController;
 use Gildsmith\Product\Controllers\AttributeValue\AttributeValueFindController;
 use Gildsmith\Product\Controllers\AttributeValue\AttributeValueIndexController;
 use Gildsmith\Product\Controllers\AttributeValue\AttributeValueUpdateController;
+use Gildsmith\Product\Controllers\Blueprint\BlueprintCreateController;
+use Gildsmith\Product\Controllers\Blueprint\BlueprintDeleteController;
+use Gildsmith\Product\Controllers\Blueprint\BlueprintFindController;
+use Gildsmith\Product\Controllers\Blueprint\BlueprintIndexController;
+use Gildsmith\Product\Controllers\Blueprint\BlueprintUpdateController;
 use Gildsmith\Product\Controllers\Product\ProductCreateController;
 use Gildsmith\Product\Controllers\Product\ProductDeleteController;
 use Gildsmith\Product\Controllers\Product\ProductFindController;
@@ -19,6 +24,11 @@ use Gildsmith\Product\Controllers\Product\ProductIndexController;
 use Gildsmith\Product\Controllers\Product\ProductRestoreController;
 use Gildsmith\Product\Controllers\Product\ProductTrashedController;
 use Gildsmith\Product\Controllers\Product\ProductUpdateController;
+use Gildsmith\Product\Controllers\ProductCollection\ProductCollectionCreateController;
+use Gildsmith\Product\Controllers\ProductCollection\ProductCollectionDeleteController;
+use Gildsmith\Product\Controllers\ProductCollection\ProductCollectionFindController;
+use Gildsmith\Product\Controllers\ProductCollection\ProductCollectionIndexController;
+use Gildsmith\Product\Controllers\ProductCollection\ProductCollectionUpdateController;
 
 Route::prefix('products')->group(function () {
     Route::get('/', ProductIndexController::class);
@@ -47,4 +57,22 @@ Route::prefix('attributes')->group(function () {
         Route::patch('/{value}', AttributeValueUpdateController::class);
         Route::delete('/{value}', AttributeValueDeleteController::class);
     });
+});
+
+Route::prefix('blueprints')->group(function () {
+    Route::get('/', BlueprintIndexController::class);
+    Route::post('/', BlueprintCreateController::class);
+    Route::get('/{code}', BlueprintFindController::class);
+    Route::put('/{code}', BlueprintUpdateController::class);
+    Route::patch('/{code}', BlueprintUpdateController::class);
+    Route::delete('/{code}', BlueprintDeleteController::class);
+});
+
+Route::prefix('collections')->group(function () {
+    Route::get('/', ProductCollectionIndexController::class);
+    Route::post('/', ProductCollectionCreateController::class);
+    Route::get('/{code}', ProductCollectionFindController::class);
+    Route::put('/{code}', ProductCollectionUpdateController::class);
+    Route::patch('/{code}', ProductCollectionUpdateController::class);
+    Route::delete('/{code}', ProductCollectionDeleteController::class);
 });
