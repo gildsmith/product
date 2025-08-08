@@ -10,7 +10,7 @@ use Gildsmith\Contract\Facades\Product\BlueprintFacadeInterface;
 use Gildsmith\Contract\Facades\Product\ProductCollectionFacadeInterface;
 use Gildsmith\Contract\Facades\ProductFacadeInterface;
 use Gildsmith\Contract\Product\ProductInterface;
-use Gildsmith\Product\Exception\MissingSoftDeletesException;
+use Gildsmith\Product\Exceptions\MissingSoftDeletesException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
