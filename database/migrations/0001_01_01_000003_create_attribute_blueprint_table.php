@@ -14,6 +14,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('attribute_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('blueprint_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->boolean('required')->default(false);
         });
     }
 
