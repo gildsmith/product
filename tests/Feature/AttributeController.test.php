@@ -32,6 +32,12 @@ it('shows an attribute', function () {
     $response->assertOk()->assertJsonPath('code', $attribute->code);
 });
 
+it('returns 404 when attribute is missing', function () {
+    $response = $this->getJson('/attributes/missing');
+
+    $response->assertNotFound();
+});
+
 it('updates an attribute', function () {
     $attribute = Attribute::factory()->create();
 
