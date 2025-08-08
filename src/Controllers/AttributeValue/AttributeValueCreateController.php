@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Gildsmith\Product\Controllers\Attribute\Value;
+namespace Gildsmith\Product\Controllers\AttributeValue;
 
 use Gildsmith\Contract\Product\AttributeValueInterface;
 use Gildsmith\Support\Facades\Product;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-class ValueCreateController extends Controller
+class AttributeValueCreateController extends Controller
 {
     public function __invoke(Request $request, string $attribute): AttributeValueInterface
     {
