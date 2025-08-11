@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Gildsmith\Product\Controllers\Product;
+namespace Gildsmith\Product\Controllers\Attribute;
 
 use Gildsmith\Support\Facades\Product;
 use Illuminate\Routing\Controller;
 
-class ProductDeleteController extends Controller
+class AttributeRestoreController extends Controller
 {
     public function __invoke(string $code): bool
     {
-        return Product::delete($code, true);
+        return Product::attribute()->restore($code);
     }
 }

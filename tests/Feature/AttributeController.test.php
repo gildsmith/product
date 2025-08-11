@@ -49,6 +49,26 @@ it('updates an attribute', function () {
     $this->assertDatabaseHas('attributes', ['code' => $attribute->code, 'name->en' => 'Updated']);
 });
 
+it('trashes an attribute', function () {
+    $attribute = Attribute::factory()->create();
+
+    $response = $this->postJson("/attributes/{$attribute->code}/trash");
+
+    $response->assertOk();
+    expect($response->json())->toEqual(true);
+    $this->assertSoftDeleted('attributes', ['code' => $attribute->code]);
+});
+
+it('restores an attribute', function () {
+    $attribute = Attribute::factory()->create();
+    $this->postJson("/attributes/{$attribute->code}/trash");
+
+    $response = $this->postJson("/attributes/{$attribute->code}/restore");
+
+    $response->assertOk();
+    $this->assertDatabaseHas('attributes', ['code' => $attribute->code, 'deleted_at' => null]);
+});
+
 it('deletes an attribute', function () {
     $attribute = Attribute::factory()->create();
 
@@ -56,5 +76,5 @@ it('deletes an attribute', function () {
 
     $response->assertOk();
     expect($response->json())->toEqual(true);
-    $this->assertSoftDeleted('attributes', ['code' => $attribute->code]);
+    $this->assertDatabaseMissing('attributes', ['code' => $attribute->code]);
 });

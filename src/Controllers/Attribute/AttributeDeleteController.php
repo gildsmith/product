@@ -11,6 +11,6 @@ class AttributeDeleteController extends Controller
 {
     public function __invoke(string $code): bool
     {
-        return Product::attribute()->delete($code);
+        return Product::attribute()->delete($code, true);
     }
 }

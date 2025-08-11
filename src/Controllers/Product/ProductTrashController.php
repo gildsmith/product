@@ -7,10 +7,10 @@ namespace Gildsmith\Product\Controllers\Product;
 use Gildsmith\Support\Facades\Product;
 use Illuminate\Routing\Controller;
 
-class ProductDeleteController extends Controller
+class ProductTrashController extends Controller
 {
     public function __invoke(string $code): bool
     {
-        return Product::delete($code, true);
+        return Product::delete($code);
     }
 }
