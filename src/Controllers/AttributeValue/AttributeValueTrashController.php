@@ -8,15 +8,15 @@ use Gildsmith\Contract\Product\AttributeValueInterface;
 use Gildsmith\Support\Facades\Product;
 use Illuminate\Routing\Controller;
 
-class AttributeValueDeleteController extends Controller
+class AttributeValueTrashController extends Controller
 {
     public function __invoke(string $attribute, string $value): bool
     {
         $attributeModel = Product::attribute()->find($attribute);
 
         /** @var AttributeValueInterface $valueModel */
-        $valueModel = $attributeModel->values()->withTrashed()->where('code', $value)->firstOrFail();
+        $valueModel = $attributeModel->values()->where('code', $value)->firstOrFail();
 
-        return (bool) $valueModel->forceDelete();
+        return (bool) $valueModel->delete();
     }
 }

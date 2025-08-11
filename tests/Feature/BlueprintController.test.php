@@ -43,6 +43,26 @@ it('updates a blueprint', function () {
     $this->assertDatabaseHas('blueprints', ['code' => $blueprint->code, 'name->en' => 'Updated']);
 });
 
+it('trashes a blueprint', function () {
+    $blueprint = Blueprint::factory()->create();
+
+    $response = $this->postJson("/blueprints/{$blueprint->code}/trash");
+
+    $response->assertOk();
+    expect($response->json())->toEqual(true);
+    $this->assertSoftDeleted('blueprints', ['code' => $blueprint->code]);
+});
+
+it('restores a blueprint', function () {
+    $blueprint = Blueprint::factory()->create();
+    $this->postJson("/blueprints/{$blueprint->code}/trash");
+
+    $response = $this->postJson("/blueprints/{$blueprint->code}/restore");
+
+    $response->assertOk();
+    $this->assertDatabaseHas('blueprints', ['code' => $blueprint->code, 'deleted_at' => null]);
+});
+
 it('deletes a blueprint', function () {
     $blueprint = Blueprint::factory()->create();
 

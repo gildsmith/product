@@ -44,6 +44,26 @@ it('updates a product collection', function () {
     $this->assertDatabaseHas('product_collections', ['code' => $collection->code, 'name->en' => 'Updated']);
 });
 
+it('trashes a product collection', function () {
+    $collection = ProductCollection::factory()->create();
+
+    $response = $this->postJson("/collections/{$collection->code}/trash");
+
+    $response->assertOk();
+    expect($response->json())->toEqual(true);
+    $this->assertSoftDeleted('product_collections', ['code' => $collection->code]);
+});
+
+it('restores a product collection', function () {
+    $collection = ProductCollection::factory()->create();
+    $this->postJson("/collections/{$collection->code}/trash");
+
+    $response = $this->postJson("/collections/{$collection->code}/restore");
+
+    $response->assertOk();
+    $this->assertDatabaseHas('product_collections', ['code' => $collection->code, 'deleted_at' => null]);
+});
+
 it('deletes a product collection', function () {
     $collection = ProductCollection::factory()->create();
 
