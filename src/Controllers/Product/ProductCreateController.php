@@ -13,6 +13,8 @@ class ProductCreateController extends Controller
 {
     public function __invoke(Request $request): ProductInterface
     {
-        return Product::create($request->all());
+        return Product::create(
+            $request->only(['code', 'name', 'blueprint_id'])
+        );
     }
 }

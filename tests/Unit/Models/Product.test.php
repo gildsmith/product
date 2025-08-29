@@ -60,10 +60,10 @@ it('has translatable name attribute', function () {
     expect($model->getTranslatableAttributes())->toContain('name');
 });
 
-it('has name fillable', function () {
+it('has correct fillable attributes', function () {
     $model = new Product;
 
-    expect($model->getFillable())->toBe(['name']);
+    expect($model->getFillable())->toBe(['code', 'name', 'blueprint_id']);
 });
 
 it('defines validation rules for code', function () {
