@@ -181,10 +181,10 @@ describe('updateOrCreate method', function () {
             'blueprint_id' => $blueprint->id,
         ]);
 
-        $created = Model::unguarded(fn () => ProductFacade::updateOrCreate($attributes->code, [
+        $created = ProductFacade::updateOrCreate($attributes->code, [
             'blueprint_id' => $blueprint->id,
             'name' => $attributes->getTranslations('name'),
-        ]));
+        ]);
 
         expect($created->code)->toBe($attributes->code)
             ->and(ProductModel::count())->toBe(1);
