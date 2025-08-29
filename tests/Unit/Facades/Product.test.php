@@ -10,15 +10,7 @@ use Gildsmith\Product\Models\Product as ProductModel;
 use Gildsmith\Support\Facades\Product as ProductFacade;
 use Illuminate\Database\Eloquent\Model;
 
-if (! interface_exists(\Gildsmith\Contract\Facades\ProductFacadeInterface::class)) {
-    class_alias(\Gildsmith\Contract\Facades\Product::class, \Gildsmith\Contract\Facades\ProductFacadeInterface::class);
-}
-
 covers(ProductFacadeConcrete::class);
-
-beforeEach(function () {
-    app()->bind(\Gildsmith\Contract\Facades\Product::class, fn () => app(\Gildsmith\Contract\Facades\ProductFacadeInterface::class));
-});
 
 describe('all method', function () {
     it('returns all products', function () {

@@ -30,14 +30,8 @@ final class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        // Ensure backwards compatibility with older facade accessor
-        if (! interface_exists('\\Gildsmith\\Contract\\Facades\\Product')) {
-            class_alias(ProductFacadeInterface::class, '\\Gildsmith\\Contract\\Facades\\Product');
-        }
-
         // Facades
         $this->app->bind(ProductFacadeInterface::class, fn () => new ProductFacade);
-        $this->app->bind('Gildsmith\\Contract\\Facades\\Product', fn () => new ProductFacade);
         $this->app->bind(AttributeFacadeInterface::class, fn () => new AttributeFacade);
         $this->app->bind(AttributeValueFacadeInterface::class, fn () => new AttributeValueFacade);
         $this->app->bind(BlueprintFacadeInterface::class, fn () => new BlueprintFacade);
