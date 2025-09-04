@@ -28,7 +28,7 @@ class Blueprint extends Model implements BlueprintInterface
 
     protected array $translatable = ['name'];
 
-    protected $fillable = ['name'];
+    protected $fillable = ['code', 'name'];
 
     public array $rules = [
         'code' => ValidationRules::CODE,
