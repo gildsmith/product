@@ -56,8 +56,8 @@ describe('delete method', function () {
 
         $result = ProductFacade::delete($product->code);
 
-        expect($result)->toBeTrue()
-            ->and(ProductModel::withTrashed()->find($product->id)->trashed())->toBeTrue();
+        expect($result)->toBeTrue();
+        expect(ProductModel::withTrashed()->find($product->id)->trashed())->toBeTrue();
     });
 
     it('force deletes a product when second parameter is true', function () {
@@ -65,8 +65,8 @@ describe('delete method', function () {
 
         $result = ProductFacade::delete($product->code, true);
 
-        expect($result)->toBeTrue()
-            ->and(ProductModel::withTrashed()->find($product->id))->toBeNull();
+        expect($result)->toBeTrue();
+        expect(ProductModel::withTrashed()->find($product->id))->toBeNull();
     });
 
     it('throws an exception if SoftDeletes is not used by a model', function () {
@@ -87,8 +87,8 @@ describe('find method', function () {
 
         $found = ProductFacade::find($product->code);
 
-        expect($found)->toBeInstanceOf(ProductModel::class)
-            ->and($found->code)->toBe($product->code);
+        expect($found)->toBeInstanceOf(ProductModel::class);
+        expect($found->code)->toBe($product->code);
     });
 
     it('returns trashed product when second parameter is true', function () {
@@ -97,8 +97,8 @@ describe('find method', function () {
 
         $found = ProductFacade::find($product->code, true);
 
-        expect($found)->not->toBeNull()
-            ->and($found->trashed())->toBeTrue();
+        expect($found)->not->toBeNull();
+        expect($found->trashed())->toBeTrue();
     });
 
     it('throws an exception if SoftDeletes is not used by a model', function () {
@@ -117,8 +117,8 @@ describe('restore method', function () {
 
         $result = ProductFacade::restore($product->code);
 
-        expect($result)->toBeTrue()
-            ->and(ProductModel::find($product->id)->trashed())->toBeFalse();
+        expect($result)->toBeTrue();
+        expect(ProductModel::find($product->id)->trashed())->toBeFalse();
     });
 
     it('throws an exception if SoftDeletes is not used by a model', function () {
@@ -186,7 +186,7 @@ describe('updateOrCreate method', function () {
             'name' => $attributes->getTranslations('name'),
         ]));
 
-        expect($created->code)->toBe($attributes->code)
-            ->and(ProductModel::count())->toBe(1);
+        expect($created->code)->toBe($attributes->code);
+        expect(ProductModel::count())->toBe(1);
     });
 });
